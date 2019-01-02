@@ -2,7 +2,7 @@ package tests;
 
 import org.testng.annotations.Test;
 
-public class TC_Adoption {
+public class TC_Adoption extends TC_Base {
 
     @Test
     public void test_AdoptOnePuppy() {
