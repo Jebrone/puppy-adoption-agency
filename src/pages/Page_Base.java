@@ -9,4 +9,10 @@ public class Page_Base {
         this.driver = driver;
     }
     
+    public class Pages {
+        
+        public Page_Home Home() {
+            return new Page_Home(driver);
+        }
+    }
 }
