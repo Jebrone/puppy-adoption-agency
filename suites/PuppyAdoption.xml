@@ -6,6 +6,8 @@
             <class name="tests.TC_Adoption">
                 <methods>
                     <include name="test_AdoptOnePuppy" />
+                    <include name="test_AdoptTwoPuppies" />
+                    <include name="test_AdoptTwoPuppiesWithAccessories" />
                 </methods>
             </class>
         </classes>

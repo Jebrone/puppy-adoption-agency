@@ -8,4 +8,14 @@ public class TC_Adoption {
     public void test_AdoptOnePuppy() {
         // TODO
     }
+
+    @Test
+    public void test_AdoptTwoPuppies() {
+        // TODO
+    }
+
+    @Test
+    public void test_AdoptTwoPuppiesWithAccessories() {
+        // TODO
+    }
 }
