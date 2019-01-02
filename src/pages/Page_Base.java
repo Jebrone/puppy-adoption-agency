@@ -3,10 +3,15 @@ package pages;
 import org.openqa.selenium.WebDriver;
 
 public class Page_Base {
+    
+    public Pages pages;
     protected WebDriver driver;
+    
+    protected static final String BASE_URL = "http://puppies.herokuapp.com/";
     
     public Page_Base(WebDriver driver) {
         this.driver = driver;
+        this.pages = new Pages();
     }
     
     public class Pages {
