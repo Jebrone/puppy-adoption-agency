@@ -8,4 +8,8 @@ public class Page_Home extends Page_Base {
         super(driver);
     }
 
+    public void visitPage() {
+        driver.navigate().to(BASE_URL);
+    }
+
 }
