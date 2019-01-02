@@ -16,8 +16,21 @@ public class Page_Base {
     
     public class Pages {
         
-        public Page_Home Home() {
-            return new Page_Home(driver);
+        public Page_AdoptionList AdoptionList() {
+            return new Page_AdoptionList(driver);
+        }
+
+        public Page_PuppyDetails PuppyDetails() {
+            return new Page_PuppyDetails(driver);
+        }
+
+        public Page_AdoptionCart AdoptionCart() {
+            return new Page_AdoptionCart(driver);
+        }
+        
+        public Page_OrderForm OrderForm() {
+            return new Page_OrderForm(driver);
+            
         }
     }
 }
