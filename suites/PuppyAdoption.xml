@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Puppy Adoption Agency">
+    <test thread-count="5" name="Adoption Tests">
+        <classes>
+            <class name="tests.TC_Adoption">
+                <methods>
+                    <include name="test_AdoptOnePuppy" />
+                </methods>
+            </class>
+        </classes>
+    </test> <!-- Adoption Tests -->
+</suite> <!-- Puppy Adoption Agency -->
