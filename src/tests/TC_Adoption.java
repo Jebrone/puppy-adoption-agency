@@ -2,6 +2,7 @@ package tests;
 
 import java.util.Map;
 
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -26,7 +27,7 @@ public class TC_Adoption extends TC_Base {
     @Test(
         dataProviderClass=DP_Adoptions.class,
         dataProvider = DP_Adoptions.TEST_NAME_SINGLE_ADOPTION)
-    public void test_AdoptOnePuppy(Map<String, Object> puppy, Map<String, String> person, String paymentType) {
+    public void test_AdoptOnePuppy(Map<String, Object> puppy, Map<String, String> person, String paymentType, Double expectedAdoptionCost) {
         System.out.println("-----------------------------------\n"
                 + "TEST: " + DP_Adoptions.TEST_NAME_SINGLE_ADOPTION + "\n"
                 +"-----------------------------------");
@@ -34,8 +35,14 @@ public class TC_Adoption extends TC_Base {
         puppyDetailsPage = adoptionListPage
             .viewPuppiesDetails((String) puppy.get("Name"));
         
+        Double puppyAdoptionFee = puppyDetailsPage.getAdoptionFee();
+        Assert.assertEquals(puppyAdoptionFee, puppy.get("Adoption Fee"));
+        
         adoptionCartPage = puppyDetailsPage
             .adoptThePuppy();
+        
+        Double actualAdoptionFee = adoptionCartPage.getTotalValue();
+        Assert.assertEquals(actualAdoptionFee, expectedAdoptionCost);
         
         orderFormPage = adoptionCartPage
             .completeAdoption();
@@ -52,7 +59,7 @@ public class TC_Adoption extends TC_Base {
         dataProviderClass=DP_Adoptions.class,
         dataProvider = DP_Adoptions.TEST_NAME_DOUBLE_ADOPTION)
     public void test_AdoptTwoPuppies(Map<String, Object> firstPuppy, Map<String, Object> secondPuppy, 
-            Map<String, String> person, String paymentType) {
+            Map<String, String> person, String paymentType, Double expectedAdoptionCost) {
         System.out.println("-----------------------------------\n"
                 + "TEST: " + DP_Adoptions.TEST_NAME_DOUBLE_ADOPTION + "\n"
                 +"-----------------------------------");
@@ -72,10 +79,13 @@ public class TC_Adoption extends TC_Base {
         adoptionCartPage = puppyDetailsPage
             .adoptThePuppy();
 
+        Double actualAdoptionFee = adoptionCartPage.getTotalValue();
+        Assert.assertEquals(actualAdoptionFee, expectedAdoptionCost);
+        
         orderFormPage = adoptionCartPage
             .completeAdoption();
 
-        orderFormPage
+        adoptionListPage = orderFormPage
             .enterName(person.get("Name"))
             .enterAddress(person.get("Address"))
             .enterEmail(person.get("Email"))
@@ -87,7 +97,7 @@ public class TC_Adoption extends TC_Base {
         dataProviderClass=DP_Adoptions.class,
         dataProvider = DP_Adoptions.TEST_NAME_DOUBLE_ADOPTION_WITH_ACCESSORIES)
     public void test_AdoptTwoPuppiesWithAccessories(Map<String, Object> firstPuppy, Map<String, Object> secondPuppy, 
-            Map<String, String> person, String paymentType) {
+            Map<String, String> person, String paymentType, Double expectedAdoptionCost) {
         System.out.println("-----------------------------------\n"
                 + "TEST: " + DP_Adoptions.TEST_NAME_DOUBLE_ADOPTION_WITH_ACCESSORIES + "\n"
                 +"-----------------------------------");
@@ -107,14 +117,19 @@ public class TC_Adoption extends TC_Base {
         adoptionCartPage = puppyDetailsPage
             .adoptThePuppy();
 
-        orderFormPage = adoptionCartPage
+        adoptionCartPage
             .selectCollar(0)
             .selectToy(0)
             .selectCollar(1)
-            .selectToy(1)
+            .selectToy(1);
+            
+        Double actualAdoptionFee = adoptionCartPage.getTotalValue();
+        Assert.assertEquals(actualAdoptionFee, expectedAdoptionCost);
+
+        orderFormPage = adoptionCartPage
             .completeAdoption();
 
-        orderFormPage
+        adoptionListPage = orderFormPage
             .enterName(person.get("Name"))
             .enterAddress(person.get("Address"))
             .enterEmail(person.get("Email"))

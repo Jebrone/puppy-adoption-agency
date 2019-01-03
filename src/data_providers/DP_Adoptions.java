@@ -89,7 +89,7 @@ public class DP_Adoptions {
     @DataProvider(name = TEST_NAME_SINGLE_ADOPTION)
     public Object[][] dp_AdoptAPuppy() {
         Object[][] testData = new Object[][] {
-            {puppies.get(0), testPerson, "Check"}
+            {puppies.get(0), testPerson, "Check", puppies.get(0).get("Adoption Fee")}
         };
 
         return testData;
@@ -97,8 +97,11 @@ public class DP_Adoptions {
     
     @DataProvider(name = TEST_NAME_DOUBLE_ADOPTION)
     public Object[][] dp_AdoptTwoPuppies() {
+        Double adoptionFee = ((Double) puppies.get(0).get("Adoption Fee") 
+                + (Double) puppies.get(1).get("Adoption Fee"));
+        
         Object[][] testData = new Object[][] {
-            {puppies.get(0), puppies.get(1), testPerson, "Credit card"}
+            {puppies.get(0), puppies.get(1), testPerson, "Credit card", adoptionFee}
         };
 
         return testData;
@@ -109,8 +112,12 @@ public class DP_Adoptions {
         List<Map<String, Object>> puppyList = puppies;
         Collections.shuffle(puppyList);
         
+        Double adoptionFee = (Double) puppies.get(0).get("Adoption Fee") 
+                + (Double) puppies.get(1).get("Adoption Fee")
+                + ((19.99 + 8.99) * 2);
+        
         Object[][] testData = new Object[][] {
-            {puppyList.get(0), puppyList.get(1), testPerson, "Purchase order"}
+            {puppyList.get(0), puppyList.get(1), testPerson, "Purchase order", adoptionFee}
         };
 
         return testData;
