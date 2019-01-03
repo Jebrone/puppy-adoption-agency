@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ThreadLocalRandom;
 
 import org.testng.annotations.DataProvider;
 
@@ -96,7 +95,7 @@ public class DP_Adoptions {
         return testData;
     }
     
-    @DataProvider(name = TEST_NAME_SINGLE_ADOPTION)
+    @DataProvider(name = TEST_NAME_DOUBLE_ADOPTION)
     public Object[][] dp_AdoptTwoPuppies() {
         Object[][] testData = new Object[][] {
             {puppies.get(0), puppies.get(1), testPerson, "Credit card"}
@@ -105,7 +104,7 @@ public class DP_Adoptions {
         return testData;
     }
     
-    @DataProvider(name = TEST_NAME_SINGLE_ADOPTION)
+    @DataProvider(name = TEST_NAME_DOUBLE_ADOPTION_WITH_ACCESSORIES)
     public Object[][] dp_AdoptTwoPuppiesWithAccessories() {
         List<Map<String, Object>> puppyList = puppies;
         Collections.shuffle(puppyList);

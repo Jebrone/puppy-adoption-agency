@@ -5,6 +5,7 @@ import java.util.Map;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import data_providers.DP_Adoptions;
 import pages.Page_AdoptionCart;
 import pages.Page_AdoptionList;
 import pages.Page_OrderForm;
@@ -22,7 +23,9 @@ public class TC_Adoption extends TC_Base {
         adoptionListPage.visitPage();
     }
 
-    @Test
+    @Test(
+        dataProviderClass=DP_Adoptions.class,
+        dataProvider = DP_Adoptions.TEST_NAME_SINGLE_ADOPTION)
     public void test_AdoptOnePuppy(Map<String, Object> puppy, Map<String, String> person, String paymentType) {
         puppyDetailsPage = adoptionListPage
             .viewPuppiesDetails((String) puppy.get("Name"));
@@ -41,7 +44,9 @@ public class TC_Adoption extends TC_Base {
             .placeOrder();
     }
 
-    @Test
+    @Test(
+        dataProviderClass=DP_Adoptions.class,
+        dataProvider = DP_Adoptions.TEST_NAME_DOUBLE_ADOPTION)
     public void test_AdoptTwoPuppies(Map<String, Object> firstPuppy, Map<String, Object> secondPuppy, 
             Map<String, String> person, String paymentType) {
         adoptionListPage
@@ -60,7 +65,9 @@ public class TC_Adoption extends TC_Base {
             .placeOrder();
     }
 
-    //@Test
+    @Test(
+        dataProviderClass=DP_Adoptions.class,
+        dataProvider = DP_Adoptions.TEST_NAME_DOUBLE_ADOPTION_WITH_ACCESSORIES)
     public void test_AdoptTwoPuppiesWithAccessories(Map<String, Object> firstPuppy, Map<String, Object> secondPuppy, 
             Map<String, String> person, String paymentType) {
         adoptionListPage
