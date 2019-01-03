@@ -1,5 +1,7 @@
 package data_providers;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -115,6 +117,9 @@ public class DP_Adoptions {
         Double adoptionFee = (Double) puppies.get(0).get("Adoption Fee") 
                 + (Double) puppies.get(1).get("Adoption Fee")
                 + ((19.99 + 8.99) * 2);
+        adoptionFee = BigDecimal.valueOf(adoptionFee)
+            .setScale(1, RoundingMode.HALF_UP)
+            .doubleValue();
         
         Object[][] testData = new Object[][] {
             {puppyList.get(0), puppyList.get(1), testPerson, "Purchase order", adoptionFee}
