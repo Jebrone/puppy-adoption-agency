@@ -28,13 +28,16 @@ public class Page_AdoptionList extends Page_Base {
     }
 
     public Page_PuppyDetails viewPuppiesDetails(String puppiesName) {
+        System.out.println("Viewing Puppy Details");
         PuppyListItem puppy;
+
+        System.out.println("Finding puppy \"" + puppiesName + "\"");
         do {
             for(WebElement puppyElement: driver.findElements(PUPPY_LIST)) {
                 puppy = new PuppyListItem(puppyElement);
-                System.out.println(puppy.toString());
                 if (puppy.getName().equals(puppiesName)) {
                     puppy.clickViewDetails();
+                    return pages.PuppyDetails();
                 }
             }
         } while(nextPage());
@@ -43,12 +46,14 @@ public class Page_AdoptionList extends Page_Base {
     }
 
     private Boolean nextPage() {
+        System.out.println("Moving to Next Page");
         WebElement next = driver.findElement(NEXT_PAGE);
-        if (next.isEnabled()) {
+        if (next.getAttribute("class").contains("disabled")) {
+            System.out.println("There is no Next Page");
+            return false;
+        } else {
             next.click();
             return true;
-        } else {
-            return false;
         }
         
     }
