@@ -118,7 +118,7 @@ public class DP_Adoptions {
                 + (Double) puppies.get(1).get("Adoption Fee")
                 + ((19.99 + 8.99) * 2);
         adoptionFee = BigDecimal.valueOf(adoptionFee)
-            .setScale(1, RoundingMode.HALF_UP)
+            .setScale(2, RoundingMode.HALF_UP)
             .doubleValue();
         
         Object[][] testData = new Object[][] {
