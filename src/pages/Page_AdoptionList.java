@@ -28,7 +28,6 @@ public class Page_AdoptionList extends Page_Base {
     }
 
     public Page_PuppyDetails viewPuppiesDetails(String puppiesName) {
-        System.out.println("Viewing Puppy Details");
         PuppyListItem puppy;
 
         System.out.println("Finding puppy \"" + puppiesName + "\"");
@@ -36,6 +35,9 @@ public class Page_AdoptionList extends Page_Base {
             for(WebElement puppyElement: driver.findElements(PUPPY_LIST)) {
                 puppy = new PuppyListItem(puppyElement);
                 if (puppy.getName().equals(puppiesName)) {
+                    System.out.println("Viewing Puppy Details\n"
+                            + puppy.toString());
+                    
                     puppy.clickViewDetails();
                     return pages.PuppyDetails();
                 }
