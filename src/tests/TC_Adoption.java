@@ -27,6 +27,10 @@ public class TC_Adoption extends TC_Base {
         dataProviderClass=DP_Adoptions.class,
         dataProvider = DP_Adoptions.TEST_NAME_SINGLE_ADOPTION)
     public void test_AdoptOnePuppy(Map<String, Object> puppy, Map<String, String> person, String paymentType) {
+        System.out.println("-----------------------------------\n"
+                + "TEST: " + DP_Adoptions.TEST_NAME_SINGLE_ADOPTION + "\n"
+                +"-----------------------------------");
+        
         puppyDetailsPage = adoptionListPage
             .viewPuppiesDetails((String) puppy.get("Name"));
         
@@ -49,12 +53,26 @@ public class TC_Adoption extends TC_Base {
         dataProvider = DP_Adoptions.TEST_NAME_DOUBLE_ADOPTION)
     public void test_AdoptTwoPuppies(Map<String, Object> firstPuppy, Map<String, Object> secondPuppy, 
             Map<String, String> person, String paymentType) {
-        adoptionListPage
-            .viewPuppiesDetails((String) firstPuppy.get("Name"))
-            .adoptThePuppy()
-            .adoptAnotherPuppy()
-            .viewPuppiesDetails((String) secondPuppy.get("Name"))
-            .adoptThePuppy()
+        System.out.println("-----------------------------------\n"
+                + "TEST: " + DP_Adoptions.TEST_NAME_DOUBLE_ADOPTION + "\n"
+                +"-----------------------------------");
+        
+        puppyDetailsPage = adoptionListPage
+            .viewPuppiesDetails((String) firstPuppy.get("Name"));
+
+        adoptionCartPage = puppyDetailsPage
+            .adoptThePuppy();
+
+        adoptionListPage = adoptionCartPage
+            .adoptAnotherPuppy();
+
+        puppyDetailsPage = adoptionListPage
+            .viewPuppiesDetails((String) secondPuppy.get("Name"));
+
+        adoptionCartPage = puppyDetailsPage
+            .adoptThePuppy();
+
+        orderFormPage = adoptionCartPage
             .completeAdoption();
 
         orderFormPage
@@ -70,18 +88,30 @@ public class TC_Adoption extends TC_Base {
         dataProvider = DP_Adoptions.TEST_NAME_DOUBLE_ADOPTION_WITH_ACCESSORIES)
     public void test_AdoptTwoPuppiesWithAccessories(Map<String, Object> firstPuppy, Map<String, Object> secondPuppy, 
             Map<String, String> person, String paymentType) {
-        adoptionListPage
-            .viewPuppiesDetails((String) firstPuppy.get("Name"))
-            .adoptThePuppy()
-            .adoptAnotherPuppy()
-            .viewPuppiesDetails((String) secondPuppy.get("Name"))
-            .adoptThePuppy()
+        System.out.println("-----------------------------------\n"
+                + "TEST: " + DP_Adoptions.TEST_NAME_DOUBLE_ADOPTION_WITH_ACCESSORIES + "\n"
+                +"-----------------------------------");
+        
+        puppyDetailsPage = adoptionListPage
+            .viewPuppiesDetails((String) firstPuppy.get("Name"));
 
-            .selectCollarForPuppy((String) firstPuppy.get("Name"))
-            .selectToyForPuppy((String) firstPuppy.get("Name"))
+        adoptionCartPage = puppyDetailsPage
+            .adoptThePuppy();
 
-            .selectCollarForPuppy((String) secondPuppy.get("Name"))
-            .selectToyForPuppy((String) secondPuppy.get("Name"))
+        adoptionListPage = adoptionCartPage
+            .adoptAnotherPuppy();
+
+        puppyDetailsPage = adoptionListPage
+            .viewPuppiesDetails((String) secondPuppy.get("Name"));
+
+        adoptionCartPage = puppyDetailsPage
+            .adoptThePuppy();
+
+        orderFormPage = adoptionCartPage
+            .selectCollar(0)
+            .selectToy(0)
+            .selectCollar(1)
+            .selectToy(1)
             .completeAdoption();
 
         orderFormPage
