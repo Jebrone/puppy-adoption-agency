@@ -39,7 +39,8 @@ public class PuppyListItem {
     }
     
     public int getId() {
-        return url.charAt(url.length() -1);
+        String[] list = url.split("/");
+        return Integer.parseInt(list[list.length - 1]);
     }
     
     public void clickViewDetails() {
