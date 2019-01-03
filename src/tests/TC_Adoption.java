@@ -1,13 +1,14 @@
 package tests;
 
-import org.testng.annotations.BeforeClass;
+import java.util.Map;
+
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import pages.Page_AdoptionCart;
 import pages.Page_AdoptionList;
 import pages.Page_OrderForm;
 import pages.Page_PuppyDetails;
-import pages.Page_AdoptionCart;
 
 public class TC_Adoption extends TC_Base {
     protected Page_AdoptionList adoptionListPage;
@@ -15,75 +16,71 @@ public class TC_Adoption extends TC_Base {
     protected Page_AdoptionCart adoptionCartPage;
     protected Page_OrderForm orderFormPage;
     
-    @BeforeClass
-    public void setup_InitializePages() {
-        adoptionListPage = basePage.pages.AdoptionList();
-        puppyDetailsPage = basePage.pages.PuppyDetails();
-        adoptionCartPage = basePage.pages.AdoptionCart();
-        orderFormPage = basePage.pages.OrderForm();
-    }
-    
     @BeforeMethod
     public void setup_GoToHomePage() {
+        adoptionListPage = basePage.pages.AdoptionList();
         adoptionListPage.visitPage();
     }
 
     @Test
-    public void test_AdoptOnePuppy(String puppiesName, 
-            String adopterName, String adopterAddress, String adopterEmail, String paymentType) {
-        adoptionListPage
-            .viewPuppiesDetails(puppiesName)
-            .adoptThePuppy()
+    public void test_AdoptOnePuppy(Map<String, Object> puppy, Map<String, String> person, String paymentType) {
+        puppyDetailsPage = adoptionListPage
+            .viewPuppiesDetails((String) puppy.get("Name"));
+        
+        adoptionCartPage = puppyDetailsPage
+            .adoptThePuppy();
+        
+        orderFormPage = adoptionCartPage
             .completeAdoption();
         
-        orderFormPage
-            .enterName(adopterName)
-            .enterAddress(adopterAddress)
-            .enterEmail(adopterEmail)
+        adoptionListPage = orderFormPage
+            .enterName(person.get("Name"))
+            .enterAddress(person.get("Address"))
+            .enterEmail(person.get("Email"))
             .selectPaymentType(paymentType)
             .placeOrder();
     }
 
     @Test
-    public void test_AdoptTwoPuppies(String firstPuppiesName, String secondPuppiesName,
-            String adopterName, String adopterAddress, String adopterEmail, String paymentType) {
+    public void test_AdoptTwoPuppies(Map<String, Object> firstPuppy, Map<String, Object> secondPuppy, 
+            Map<String, String> person, String paymentType) {
         adoptionListPage
-            .viewPuppiesDetails(firstPuppiesName)
+            .viewPuppiesDetails((String) firstPuppy.get("Name"))
             .adoptThePuppy()
             .adoptAnotherPuppy()
-            .viewPuppiesDetails(secondPuppiesName)
+            .viewPuppiesDetails((String) secondPuppy.get("Name"))
             .adoptThePuppy()
             .completeAdoption();
 
         orderFormPage
-            .enterName(adopterName)
-            .enterAddress(adopterAddress)
-            .enterEmail(adopterEmail)
+            .enterName(person.get("Name"))
+            .enterAddress(person.get("Address"))
+            .enterEmail(person.get("Email"))
             .selectPaymentType(paymentType)
             .placeOrder();
     }
 
-    @Test
-    public void test_AdoptTwoPuppiesWithAccessories(String firstPuppiesName, String secondPuppiesName,
-            String adopterName, String adopterAddress, String adopterEmail, String paymentType) {
+    //@Test
+    public void test_AdoptTwoPuppiesWithAccessories(Map<String, Object> firstPuppy, Map<String, Object> secondPuppy, 
+            Map<String, String> person, String paymentType) {
         adoptionListPage
-            .viewPuppiesDetails(firstPuppiesName)
+            .viewPuppiesDetails((String) firstPuppy.get("Name"))
             .adoptThePuppy()
             .adoptAnotherPuppy()
-            .viewPuppiesDetails(secondPuppiesName)
+            .viewPuppiesDetails((String) secondPuppy.get("Name"))
             .adoptThePuppy()
 
-            .selectCollarForPuppy(firstPuppiesName)
-            .selectToyForPuppy(firstPuppiesName)
+            .selectCollarForPuppy((String) firstPuppy.get("Name"))
+            .selectToyForPuppy((String) firstPuppy.get("Name"))
 
-            .selectCollarForPuppy(secondPuppiesName)
-            .selectToyForPuppy(secondPuppiesName)
+            .selectCollarForPuppy((String) secondPuppy.get("Name"))
+            .selectToyForPuppy((String) secondPuppy.get("Name"))
             .completeAdoption();
 
         orderFormPage
-            .enterName(adopterName)
-            .enterAddress(adopterAddress)
-            .enterEmail(adopterEmail)
+            .enterName(person.get("Name"))
+            .enterAddress(person.get("Address"))
+            .enterEmail(person.get("Email"))
             .selectPaymentType(paymentType)
             .placeOrder();
     }
